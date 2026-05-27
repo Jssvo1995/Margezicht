@@ -1,0 +1,1770 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Margezicht — Plezier en grip terug in AI</title>
+<meta name="description" content="Margezicht brengt AI in het MKB bij elkaar. Plezier voor de DGA én het team. Eerste meetbare resultaten in 30 dagen." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================
+   Margezicht — Homepage
+   Eén bestand. CSS in head, JS onderaan body.
+   Tokens → Base → Lay-out → Componenten → Secties → Media
+   ========================================================= */
+
+/* ---------- Tokens ---------- */
+:root {
+  --dark: #0a0612;
+  --dark-2: #120a1f;
+  --light: #faf8f3;
+  --light-2: #f3efe5;
+  --ink: #1a0e2e;
+  --ink-2: #444;
+  --line-dark: rgba(255,255,255,0.08);
+  --line-light: rgba(26,14,46,0.08);
+  --text-on-dark: rgba(255,255,255,0.7);
+  --text-on-dark-strong: #fff;
+  --peach: #FFD4C2;
+  --coral: #FF5F8F;
+  --magenta: #C44BFF;
+  --purple: #8B5CF6;
+  --blue: #5B8DEF;
+  --grad: linear-gradient(135deg, #FFD4C2 0%, #FF5F8F 35%, #C44BFF 75%, #8B5CF6 100%);
+  --radius: 14px;
+  --radius-lg: 22px;
+  --container: 1180px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+:focus-visible { outline: 2px solid var(--magenta); outline-offset: 3px; border-radius: 6px; }
+
+h1, h2, h3, h4 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+  text-wrap: balance;
+}
+p { margin: 0; text-wrap: pretty; }
+
+.container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Surfaces ---------- */
+.surface-dark {
+  background: var(--dark);
+  color: var(--text-on-dark);
+  position: relative;
+  overflow: hidden;
+}
+.surface-dark h1, .surface-dark h2, .surface-dark h3 { color: #fff; }
+.surface-light { background: var(--light); color: var(--ink); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 15px;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease), color .25s var(--ease);
+  line-height: 1;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--grad);
+  color: #1a0e2e;
+  font-weight: 600;
+  box-shadow: 0 6px 22px -8px rgba(196,75,255,0.55);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px -10px rgba(196,75,255,0.7), 0 4px 14px -6px rgba(255,95,143,0.5);
+}
+.btn-ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.22);
+}
+.btn-ghost:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.35);
+}
+.btn-light-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(26,14,46,0.18);
+}
+.btn-light-ghost:hover { background: rgba(26,14,46,0.04); transform: translateY(-2px); }
+
+.btn .arrow { transition: transform .25s var(--ease); }
+.btn:hover .arrow { transform: translateX(3px); }
+
+/* ---------- Navigation ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10,6,18,0.75);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid var(--line-dark);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  gap: 24px;
+}
+.logo {
+  color: #fff;
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.logo-mark {
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  background: var(--grad);
+  box-shadow: 0 4px 12px -4px rgba(196,75,255,0.6);
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  color: rgba(255,255,255,0.7);
+  font-size: 14.5px;
+  transition: color .2s var(--ease);
+}
+.nav-links a:hover { color: #fff; }
+.nav-cta { display: flex; align-items: center; gap: 12px; }
+.nav-cta .btn { padding: 10px 18px; font-size: 14px; }
+
+.hamburger {
+  display: none;
+  width: 40px; height: 40px;
+  align-items: center; justify-content: center;
+  color: #fff;
+}
+.hamburger span {
+  display: block;
+  width: 20px; height: 1.5px;
+  background: #fff;
+  position: relative;
+}
+.hamburger span::before, .hamburger span::after {
+  content: ""; position: absolute; left: 0; width: 20px; height: 1.5px; background: #fff;
+  transition: transform .25s var(--ease), top .25s var(--ease);
+}
+.hamburger span::before { top: -6px; }
+.hamburger span::after  { top:  6px; }
+.nav.is-open .hamburger span { background: transparent; }
+.nav.is-open .hamburger span::before { top: 0; transform: rotate(45deg); }
+.nav.is-open .hamburger span::after  { top: 0; transform: rotate(-45deg); }
+
+.mobile-panel {
+  display: none;
+  position: absolute;
+  top: 68px; left: 0; right: 0;
+  background: rgba(10,6,18,0.97);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line-dark);
+  padding: 16px 24px 28px;
+}
+.mobile-panel a {
+  display: block;
+  padding: 14px 0;
+  color: rgba(255,255,255,0.85);
+  border-bottom: 1px solid var(--line-dark);
+  font-size: 17px;
+}
+.mobile-panel .btn { margin-top: 18px; width: 100%; justify-content: center; }
+.nav.is-open .mobile-panel { display: block; }
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: 72px 0 90px;
+  position: relative;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 64px;
+  align-items: center;
+}
+.hero h1 {
+  font-size: clamp(46px, 6.4vw, 88px);
+  letter-spacing: -0.035em;
+  margin: 22px 0 24px;
+  line-height: 1.02;
+}
+.hero h1 .grad-text { display: inline-block; }
+.hero .lede {
+  max-width: 480px;
+  font-size: 17px;
+  color: var(--text-on-dark);
+}
+.hero-eyebrow { color: var(--peach); }
+.hero-ctas { display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+.hero-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.55);
+  font-size: 13.5px;
+  margin-top: 28px;
+}
+.hero-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 12px #4ade80; }
+
+.surface-dark::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  opacity: .5;
+}
+
+/* ---------- 3D blob (3 layers + glanslicht) ---------- */
+.blob-stage {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  animation: blobFloat 7s ease-in-out infinite;
+}
+@keyframes blobFloat {
+  0%, 100% { transform: translateY(0) }
+  50%      { transform: translateY(-14px) }
+}
+.blob-conic, .blob-sphere, .blob-gloss {
+  position: absolute;
+  border-radius: 50%;
+}
+.blob-conic {
+  inset: 0;
+  background: conic-gradient(from 0deg,
+    #FFD4C2 0%, #FF5F8F 22%, #C44BFF 48%, #8B5CF6 70%, #5B8DEF 88%, #FFD4C2 100%);
+  filter: blur(48px);
+  opacity: .85;
+  animation: blobSpin 28s linear infinite;
+}
+@keyframes blobSpin { to { transform: rotate(360deg); } }
+.blob-sphere {
+  inset: 14%;
+  background: radial-gradient(circle at 35% 30%, #FF5F8F 0%, #C44BFF 40%, #5B0a5e 75%, #0a0612 100%);
+  box-shadow:
+    inset -40px -40px 80px rgba(0,0,0,0.55),
+    inset 30px 30px 60px rgba(255,212,194,0.25),
+    0 30px 80px -10px rgba(196,75,255,0.45);
+  animation: blobPulse 5s ease-in-out infinite;
+}
+@keyframes blobPulse {
+  0%, 100% { transform: scale(1) }
+  50%      { transform: scale(1.04) }
+}
+.blob-gloss {
+  inset: 18%;
+  background: radial-gradient(ellipse 45% 30% at 35% 25%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.0) 60%);
+  mix-blend-mode: screen;
+  filter: blur(4px);
+  pointer-events: none;
+}
+.blob-ring {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.07);
+  pointer-events: none;
+}
+.blob-ring.r2 { inset: -4%; border-style: dashed; opacity: .35; }
+
+/* ---------- Pijlers (dark) ---------- */
+.pillars {
+  padding: 0 0 80px;
+  position: relative;
+}
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.pillar {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-lg);
+  padding: 26px 24px 28px;
+  position: relative;
+  transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease);
+  overflow: hidden;
+}
+.pillar:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.04);
+}
+.pillar-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+.pillar-magenta { color: #FFB7F7; background: rgba(196,75,255,0.12); }
+.pillar-coral   { color: #FFCFDC; background: rgba(255,95,143,0.12); }
+.pillar-purple  { color: #D9CFFF; background: rgba(139,92,246,0.12); }
+.pillar-blue    { color: #C9DCFF; background: rgba(91,141,239,0.12); }
+.pillar h3 {
+  font-size: 19px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.pillar p { font-size: 14.5px; color: var(--text-on-dark); }
+.pillar::after {
+  content: "";
+  position: absolute;
+  inset: auto -40% -60% auto;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: .25;
+  pointer-events: none;
+}
+.pillar.p1::after { background: var(--magenta); }
+.pillar.p2::after { background: var(--coral); }
+.pillar.p3::after { background: var(--purple); }
+.pillar.p4::after { background: var(--blue); }
+
+/* ---------- Section heads ---------- */
+.section {
+  padding: 80px 0;
+  position: relative;
+}
+.section-head {
+  max-width: 720px;
+  margin: 0 0 40px;
+}
+.section-head .eyebrow {
+  color: var(--magenta);
+  margin-bottom: 14px;
+  display: inline-block;
+}
+.section-head h2 {
+  font-size: clamp(34px, 4vw, 52px);
+  margin-bottom: 16px;
+}
+.section-head p {
+  color: var(--ink-2);
+  font-size: 17px;
+  max-width: 560px;
+}
+.surface-dark .section-head p { color: var(--text-on-dark); }
+
+/* ---------- Pijnen ---------- */
+.pains {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.pain {
+  background: #fff;
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  position: relative;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.pain:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 50px -28px rgba(26,14,46,0.18);
+}
+.pain-num {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--magenta);
+  margin-bottom: 16px;
+  display: block;
+}
+.pain h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+.pain p { color: var(--ink-2); font-size: 15.5px; }
+
+/* ---------- Steps ---------- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.step {
+  background: #fff;
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-lg);
+  padding: 36px 30px 34px;
+  position: relative;
+  overflow: hidden;
+}
+.step-num {
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  color: var(--ink);
+  opacity: .5;
+  margin-bottom: 22px;
+  display: block;
+}
+.step h3 {
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+.step p { color: var(--ink-2); font-size: 15.5px; }
+.step::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--grad);
+  opacity: 0;
+  transition: opacity .3s var(--ease);
+}
+.step:hover::before { opacity: 1; }
+
+/* ---------- Marge-blok (dark quote) ---------- */
+.marge {
+  padding: 90px 0;
+  text-align: center;
+}
+.marge-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+.marge-quote {
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.25;
+  color: #fff;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.marge-author {
+  margin-top: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: rgba(255,255,255,0.55);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+.marge-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--grad);
+  position: relative;
+  box-shadow: 0 6px 20px -6px rgba(196,75,255,0.5);
+}
+.marge-avatar::after {
+  content: "J";
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-family: "Inter", sans-serif;
+  color: #1a0e2e;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+/* ---------- Diagnose ---------- */
+.diagnose {
+  background: var(--light);
+}
+.diagnose-card {
+  background: #fff;
+  border: 1px solid var(--line-light);
+  border-radius: 26px;
+  padding: 44px 44px 40px;
+  max-width: 760px;
+  margin: 0 auto;
+  box-shadow: 0 30px 80px -50px rgba(26,14,46,0.25);
+  position: relative;
+  overflow: hidden;
+}
+.diagnose-progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 28px;
+}
+.dot-step {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(26,14,46,0.08);
+  transition: background .35s var(--ease);
+}
+.dot-step.active { background: var(--grad); }
+.dot-step.done { background: rgba(196,75,255,0.35); }
+
+.q-stage { position: relative; min-height: 220px; }
+.question {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
+  pointer-events: none;
+}
+.question.active {
+  opacity: 1; transform: translateY(0); pointer-events: auto;
+}
+.question .qnum {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--magenta);
+  margin-bottom: 14px;
+}
+.question h3 {
+  font-size: clamp(22px, 2.4vw, 28px);
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+.q-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.q-actions button {
+  padding: 13px 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(26,14,46,0.16);
+  font-weight: 500;
+  font-size: 15px;
+  background: #fff;
+  transition: all .2s var(--ease);
+}
+.q-actions button:hover {
+  border-color: var(--magenta);
+  transform: translateY(-2px);
+}
+.q-actions .yes {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.q-actions .yes:hover { background: #2a1a4a; }
+
+.result {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+  pointer-events: none;
+}
+.result.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.result-fase {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(196,75,255,0.1);
+  color: var(--magenta);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.result h3 {
+  font-size: clamp(22px, 2.4vw, 28px);
+  margin-bottom: 12px;
+}
+.result p { color: var(--ink-2); margin-bottom: 18px; }
+.result-rec {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: var(--light-2);
+  border: 1px solid var(--line-light);
+  font-size: 14.5px;
+}
+.result-rec strong { font-weight: 600; }
+.result-actions { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+.result-reset {
+  font-size: 14px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 4px;
+}
+
+/* ---------- Voor jouw functie (tiles) ---------- */
+.functions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.fn-tile {
+  background: #fff;
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: transform .3s var(--ease), border-color .3s var(--ease);
+  cursor: pointer;
+}
+.fn-tile:hover {
+  transform: translateY(-4px);
+  border-color: rgba(196,75,255,0.35);
+}
+.fn-tile h3 {
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+.fn-list {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+.fn-list li {
+  font-size: 14px;
+  color: var(--ink-2);
+  padding: 4px 0 4px 14px;
+  position: relative;
+}
+.fn-list li::before {
+  content: "";
+  position: absolute; left: 0; top: 12px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--grad);
+}
+.fn-tile:hover .fn-list { opacity: 1; transform: translateY(0); }
+.fn-arrow {
+  position: absolute;
+  top: 22px; right: 22px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--light-2);
+  display: grid; place-items: center;
+  transition: background .3s var(--ease), transform .3s var(--ease);
+  color: var(--ink);
+}
+.fn-tile:hover .fn-arrow {
+  background: var(--grad);
+  color: #1a0e2e;
+  transform: rotate(-45deg);
+}
+
+/* ---------- Stats / disclaimer block ---------- */
+.no-stats {
+  background: #fff;
+  border: 1px solid var(--line-light);
+  border-radius: 26px;
+  padding: 44px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.no-stats p { font-size: 17px; color: var(--ink); }
+.no-stats p + p { margin-top: 16px; font-size: 14.5px; color: var(--ink-2); }
+.no-stats a { color: var(--magenta); border-bottom: 1px solid rgba(196,75,255,0.3); }
+.no-stats a:hover { border-color: var(--magenta); }
+
+/* ---------- Final CTA ---------- */
+.final-cta {
+  padding: 96px 0;
+  text-align: center;
+  position: relative;
+}
+.final-cta h2 {
+  font-size: clamp(36px, 4.4vw, 56px);
+  color: #fff;
+  margin-bottom: 20px;
+}
+.final-cta p { font-size: 18px; color: var(--text-on-dark); max-width: 560px; margin: 0 auto 36px; }
+.final-cta .btn { padding: 18px 30px; font-size: 16px; }
+
+.final-cta::after {
+  content: "";
+  position: absolute;
+  width: 700px; height: 700px;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(196,75,255,0.18) 0%, rgba(255,95,143,0.10) 35%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(20px);
+}
+.final-cta > * { position: relative; z-index: 1; }
+
+/* ---------- Footer ---------- */
+.footer {
+  padding: 64px 0 36px;
+  border-top: 1px solid var(--line-dark);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.footer-brand p { font-size: 13.5px; color: rgba(255,255,255,0.5); margin-top: 14px; max-width: 280px; }
+.footer h4 {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.footer ul a { color: rgba(255,255,255,0.75); font-size: 14.5px; transition: color .2s; }
+.footer ul a:hover { color: #fff; }
+.footer-bottom {
+  margin-top: 56px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-dark);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.4);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ---------- AI Robot scene (3D) ---------- */
+.robot-section {
+  padding: 70px 0 80px;
+  position: relative;
+}
+.robot-head {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 32px;
+}
+.robot-head .eyebrow { color: var(--peach); margin-bottom: 14px; display: inline-block; }
+.robot-head h2 {
+  font-size: clamp(34px, 4vw, 52px);
+  color: #fff;
+  margin-bottom: 14px;
+}
+.robot-head p { color: var(--text-on-dark); font-size: 16px; max-width: 540px; margin: 0 auto; }
+
+.robot-stage {
+  position: relative;
+  margin: 0 auto;
+  max-width: 1080px;
+  height: 520px;
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+}
+.robot-scene {
+  position: relative;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  animation: sceneTilt 22s ease-in-out infinite alternate;
+}
+@keyframes sceneTilt {
+  0%   { transform: rotateY(-7deg) rotateX(3deg); }
+  50%  { transform: rotateY(0deg)  rotateX(-1deg); }
+  100% { transform: rotateY(7deg)  rotateX(3deg); }
+}
+
+.robot-glow {
+  position: absolute;
+  left: 50%; top: 58%;
+  width: 460px; height: 200px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(196,75,255,0.35) 0%, rgba(255,95,143,0.18) 40%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.robot-pedestal {
+  position: absolute;
+  left: 50%; bottom: 80px;
+  width: 280px; height: 60px;
+  transform: translateX(-50%) rotateX(70deg);
+  transform-style: preserve-3d;
+  border-radius: 50%;
+  border: 1px solid rgba(196,75,255,0.35);
+  box-shadow:
+    0 0 60px rgba(196,75,255,0.35),
+    inset 0 0 30px rgba(255,95,143,0.25);
+}
+.robot-pedestal::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255,255,255,0.15);
+  animation: pedSpin 22s linear infinite;
+}
+@keyframes pedSpin { to { transform: rotate(360deg); } }
+
+.robot {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 220px; height: 300px;
+  transform: translate(-50%, -58%) translateZ(20px);
+  animation: robotFloat 5.5s ease-in-out infinite;
+  z-index: 2;
+}
+@keyframes robotFloat {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -12px; }
+}
+.robot svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 30px 30px rgba(0,0,0,0.5)); }
+
+.m-card {
+  position: absolute;
+  width: 220px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+  padding: 16px 18px 18px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 24px 60px -30px rgba(0,0,0,0.6),
+    0 8px 24px -12px rgba(196,75,255,0.35);
+  animation: cardBob 7s ease-in-out infinite;
+  z-index: 3;
+}
+.m-card-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 14px;
+}
+.m-card-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 8px; margin-bottom: 10px;
+}
+.m-card-value {
+  font-size: 26px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.m-card-trend {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.trend-up   { color: #FFD4C2; background: rgba(255,212,194,0.10); }
+.trend-down { color: #C9DCFF; background: rgba(91,141,239,0.12); }
+.m-card-bar {
+  position: relative;
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.m-card-bar span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  border-radius: 999px;
+  background: var(--grad);
+  transition: width 1.6s cubic-bezier(.2,.7,.2,1);
+}
+.m-card-bar.from-right span {
+  inset: 0 0 0 auto;
+  background: linear-gradient(90deg, #5B8DEF 0%, #8B5CF6 100%);
+}
+.is-counted .m-card-bar span { width: var(--fill, 60%); }
+
+.m-card-1 { top: 30px;  left: 4%;  transform: translateZ(60px) rotateY(8deg);  animation-delay: -1s; }
+.m-card-2 { top: 80px;  right: 4%; transform: translateZ(90px) rotateY(-10deg); animation-delay: -2.4s; }
+.m-card-3 { bottom: 60px; left: 8%; transform: translateZ(110px) rotateY(6deg); animation-delay: -3.6s; }
+.m-card-4 { bottom: 30px; right: 6%; transform: translateZ(40px) rotateY(-8deg); animation-delay: -5s; }
+
+@keyframes cardBob {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -8px; }
+}
+
+.robot-wires {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.robot-wires path {
+  stroke: url(#wireGrad);
+  stroke-width: 1;
+  fill: none;
+  stroke-dasharray: 3 5;
+  opacity: 0.4;
+  animation: wireFlow 14s linear infinite;
+}
+@keyframes wireFlow {
+  to { stroke-dashoffset: -200; }
+}
+
+.robot-caption {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.robot-caption::before {
+  content: "";
+  display: inline-block;
+  width: 24px; height: 1px;
+  background: rgba(255,255,255,0.2);
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.robot-caption::after {
+  content: "";
+  display: inline-block;
+  width: 24px; height: 1px;
+  background: rgba(255,255,255,0.2);
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+.r-eye {
+  transform-origin: center;
+  animation: rBlink 5.5s ease-in-out infinite;
+}
+.r-eye.right { animation-delay: -0.05s; }
+@keyframes rBlink {
+  0%, 92%, 96%, 100% { transform: scaleY(1); }
+  94%                { transform: scaleY(0.08); }
+}
+
+@media (max-width: 980px) {
+  .robot-stage { height: 600px; }
+  .m-card { width: 190px; }
+  .m-card-1, .m-card-3 { left: 2%; }
+  .m-card-2, .m-card-4 { right: 2%; }
+}
+@media (max-width: 720px) {
+  .robot-section { padding: 56px 0 64px; }
+  .robot-stage { height: 720px; perspective: 1000px; }
+  .robot { width: 170px; height: 230px; }
+  .m-card { width: 78%; left: 11% !important; right: auto !important; transform: none; }
+  .m-card-1 { top: 12px; }
+  .m-card-2 { top: 110px; }
+  .m-card-3 { top: auto; bottom: 110px; }
+  .m-card-4 { bottom: 12px; }
+  .robot { transform: translate(-50%, -50%) translateZ(0); }
+  .robot-pedestal { width: 220px; bottom: auto; top: 50%; }
+  .robot-glow { top: 50%; }
+  .robot-wires { display: none; }
+}
+
+/* ---------- Scroll-in fade ---------- */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.in { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .blob-stage, .blob-conic, .blob-sphere { animation: none !important; }
+}
+
+/* ---------- Media ---------- */
+@media (max-width: 980px) {
+  .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+  .pains, .steps { grid-template-columns: 1fr; }
+  .functions { grid-template-columns: repeat(2, 1fr); }
+  .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .hero { padding: 56px 0 80px; }
+  .blob-stage { max-width: 380px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .nav-links, .nav-cta .btn-primary { display: none; }
+  .hamburger { display: inline-flex; }
+  .section { padding: 60px 0; }
+  .pillars-grid, .functions { grid-template-columns: 1fr; }
+  .diagnose-card { padding: 28px 22px; }
+  .no-stats { padding: 28px; }
+  .marge { padding: 70px 0; }
+  .final-cta { padding: 70px 0; }
+  .pillars { padding-bottom: 50px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============= NAV (dark) ============= -->
+<header class="surface-dark nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="logo" aria-label="Margezicht — home">
+      <span class="logo-mark" aria-hidden="true"></span>
+      Margezicht
+    </a>
+    <nav aria-label="Hoofdnavigatie">
+      <ul class="nav-links">
+        <li><a href="#aanpak">Aanpak</a></li>
+        <li><a href="#functie">Voor jouw functie</a></li>
+        <li><a href="#werkwijze">Hoe wij werken</a></li>
+        <li><a href="#over">Over</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a href="#plan" class="btn btn-primary">Plan een gesprek <span class="arrow">→</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobilePanel">
+        <span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <a href="#aanpak">Aanpak</a>
+    <a href="#functie">Voor jouw functie</a>
+    <a href="#werkwijze">Hoe wij werken</a>
+    <a href="#over">Over</a>
+    <a href="#plan" class="btn btn-primary">Plan een gesprek <span class="arrow">→</span></a>
+  </div>
+</header>
+
+<!-- ============= HERO (dark) ============= -->
+<section class="surface-dark hero" id="top">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow hero-eyebrow">AI voor het MKB</span>
+      <h1>
+        <span class="grad-text">Plezier en grip</span><br>
+        terug in AI.
+      </h1>
+      <p class="lede">
+        Margezicht brengt het bij elkaar. We zorgen dat AI in jouw MKB écht gaat werken,
+        samen met je team. Eerste meetbare resultaten in 30 dagen.
+        Geen IT-project, wel iets waar je mensen energie van krijgen.
+      </p>
+      <div class="hero-ctas">
+        <a href="#plan" class="btn btn-primary">Plan een gesprek <span class="arrow">→</span></a>
+        <a href="#werkwijze" class="btn btn-ghost">Hoe wij dat doen</a>
+      </div>
+      <div class="hero-meta">
+        <span class="dot" aria-hidden="true"></span>
+        Nieuwe founding-partner plekken open · regio Twente &amp; Achterhoek
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="blob-stage">
+        <span class="blob-ring r2"></span>
+        <span class="blob-conic"></span>
+        <span class="blob-ring"></span>
+        <span class="blob-sphere"></span>
+        <span class="blob-gloss"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= PIJLERS (dark) ============= -->
+<section class="surface-dark pillars" id="aanpak" aria-label="De vier pijlers van Margezicht">
+  <div class="container">
+    <div class="pillars-grid">
+
+      <article class="pillar p1 reveal">
+        <span class="pillar-tag pillar-magenta">Bij elkaar</span>
+        <h3>Tools, data, mensen — op één plek.</h3>
+        <p>Mensen zien door de bomen het bos niet meer. Wij brengen je tools, data en team terug bij elkaar.</p>
+      </article>
+
+      <article class="pillar p2 reveal">
+        <span class="pillar-tag pillar-coral">Plezier</span>
+        <h3>Energie in plaats van weerstand.</h3>
+        <p>We geven iedereen plezier in AI. Bij de DGA én bij z'n mensen. Geen weerstand, wel enthousiasme.</p>
+      </article>
+
+      <article class="pillar p3 reveal">
+        <span class="pillar-tag pillar-purple">Samen</span>
+        <h3>Met jouw team, niet erlangs.</h3>
+        <p>Samen iets tofs maken van wat AI nu al kan. In jouw bedrijf, met jouw mensen.</p>
+      </article>
+
+      <article class="pillar p4 reveal">
+        <span class="pillar-tag pillar-blue">Niet wegschuiven</span>
+        <h3>Doen, deze maand al.</h3>
+        <p>Niet weer een rapport voor in de la. Wel daadwerkelijk doen, deze maand al.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============= PIJNEN (light) ============= -->
+<section class="surface-light section" aria-label="Wat speelt er">
+  <div class="container">
+    <header class="section-head reveal">
+      <span class="eyebrow">Wat herken je</span>
+      <h2>Wat speelt er bij jouw bedrijf?</h2>
+      <p>Niet elke DGA staat op hetzelfde punt. Drie patronen komen telkens terug.</p>
+    </header>
+
+    <div class="pains">
+      <article class="pain reveal">
+        <span class="pain-num">01 — Versplintering</span>
+        <h3>Je ziet door de bomen het bos niet meer.</h3>
+        <p>Tools, accounts, mensen die experimenteren of juist niet. Niemand heeft het overzicht.</p>
+      </article>
+
+      <article class="pain reveal">
+        <span class="pain-num">02 — Uitstel</span>
+        <h3>AI wordt elke week weggeschoven.</h3>
+        <p>Eerst nog dit afmaken, dan vakantie, dan budget. Maanden later sta je waar je was en is de afstand met de concurrent gegroeid.</p>
+      </article>
+
+      <article class="pain reveal">
+        <span class="pain-num">03 — Tweedeling</span>
+        <h3>Je weet niet of je mensen het oppakken.</h3>
+        <p>Een paar 'helden' lopen voorop, de rest haakt af. Geen tweedeling in je bedrijf, daar word je niet beter van.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= STAPPEN (light) ============= -->
+<section class="surface-light section" id="werkwijze" style="padding-top: 0;" aria-label="Werkwijze">
+  <div class="container">
+    <header class="section-head reveal">
+      <span class="eyebrow">Onze aanpak</span>
+      <h2>Hoe we het bij elkaar houden.</h2>
+      <p>Drie bewegingen, in deze volgorde. Geen blauwdruk uit een sjabloon — dit is wat in jouw bedrijf werkt.</p>
+    </header>
+
+    <div class="steps">
+      <article class="step reveal">
+        <span class="step-num">01</span>
+        <h3>We brengen plezier in AI.</h3>
+        <p>Eerst bij jou, dan bij je team. Geen training die mensen ondergaan, wel een werkwijze die ze meenemen.</p>
+      </article>
+
+      <article class="step reveal">
+        <span class="step-num">02</span>
+        <h3>We leveren quick wins binnen 30 dagen.</h3>
+        <p>Op marketing, sales, HR of operations. Concreet, meetbaar, in tools die je team al kent.</p>
+      </article>
+
+      <article class="step reveal">
+        <span class="step-num">03</span>
+        <h3>We blijven.</h3>
+        <p>AI is geen project, het is een levend onderdeel van je bedrijf. Onderhoud, doorontwikkeling en sparring, elke maand.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= AI ROBOT SCENE (3D, dark) ============= -->
+<section class="surface-dark robot-section" aria-label="Wat AI typisch oplevert">
+  <div class="container">
+    <header class="robot-head reveal">
+      <span class="eyebrow">Wat het oplevert</span>
+      <h2>Minder tijd kwijt. <span class="grad-text">Meer marge over.</span></h2>
+      <p>Onze AI-assistent doet z'n werk op de plekken waar het schuurt. Hieronder de richting per categorie — concrete cijfers leveren we per traject, vooraf en achteraf gemeten.</p>
+    </header>
+
+    <div class="robot-stage reveal" id="robotStage">
+      <div class="robot-scene">
+
+        <span class="robot-glow" aria-hidden="true"></span>
+        <span class="robot-pedestal" aria-hidden="true"></span>
+
+        <!-- Decorative wires from robot to cards -->
+        <svg class="robot-wires" viewBox="0 0 1080 520" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="wireGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"  stop-color="#FF5F8F" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.1"/>
+            </linearGradient>
+          </defs>
+          <path d="M540,260 C400,200 320,120 200,80" />
+          <path d="M540,260 C700,200 800,140 920,110" />
+          <path d="M540,260 C420,320 320,400 180,440" />
+          <path d="M540,260 C700,320 820,400 940,440" />
+        </svg>
+
+        <!-- Floating metric cards -->
+        <article class="m-card m-card-1 reveal" data-fill="35" data-direction="down">
+          <span class="m-card-label">Tijd op routinetaken</span>
+          <div class="m-card-row">
+            <span class="m-card-value">↘</span>
+            <span class="m-card-trend trend-down">↓ minder</span>
+          </div>
+          <div class="m-card-bar from-right"><span style="--fill: 65%"></span></div>
+        </article>
+
+        <article class="m-card m-card-2 reveal" data-fill="85" data-direction="up">
+          <span class="m-card-label">Marketing-output</span>
+          <div class="m-card-row">
+            <span class="m-card-value">↗</span>
+            <span class="m-card-trend trend-up">↑ meer</span>
+          </div>
+          <div class="m-card-bar"><span style="--fill: 85%"></span></div>
+        </article>
+
+        <article class="m-card m-card-3 reveal" data-fill="40" data-direction="down">
+          <span class="m-card-label">Reactietijd klant</span>
+          <div class="m-card-row">
+            <span class="m-card-value">↘</span>
+            <span class="m-card-trend trend-down">↓ sneller</span>
+          </div>
+          <div class="m-card-bar from-right"><span style="--fill: 60%"></span></div>
+        </article>
+
+        <article class="m-card m-card-4 reveal" data-fill="75" data-direction="up">
+          <span class="m-card-label">Marge</span>
+          <div class="m-card-row">
+            <span class="m-card-value">↗</span>
+            <span class="m-card-trend trend-up">↑ hoger</span>
+          </div>
+          <div class="m-card-bar"><span style="--fill: 75%"></span></div>
+        </article>
+
+        <!-- Robot -->
+        <div class="robot" id="robot">
+          <svg viewBox="0 0 220 300" xmlns="http://www.w3.org/2000/svg" aria-label="Margezicht AI-assistent">
+            <defs>
+              <linearGradient id="rg-head" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="#231333"/>
+                <stop offset="100%" stop-color="#0d0719"/>
+              </linearGradient>
+              <linearGradient id="rg-body" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="#1c0f2c"/>
+                <stop offset="100%" stop-color="#0a0612"/>
+              </linearGradient>
+              <radialGradient id="rg-eye" cx="0.35" cy="0.3" r="0.8">
+                <stop offset="0%"  stop-color="#FFE4D6"/>
+                <stop offset="40%" stop-color="#FF5F8F"/>
+                <stop offset="100%" stop-color="#8B5CF6"/>
+              </radialGradient>
+              <linearGradient id="rg-accent" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"   stop-color="#FFD4C2"/>
+                <stop offset="35%"  stop-color="#FF5F8F"/>
+                <stop offset="75%"  stop-color="#C44BFF"/>
+                <stop offset="100%" stop-color="#8B5CF6"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Antenna -->
+            <line x1="110" y1="20" x2="110" y2="48" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="110" cy="18" r="6" fill="url(#rg-accent)">
+              <animate attributeName="r" values="6;8;6" dur="2.4s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;0.6;1" dur="2.4s" repeatCount="indefinite"/>
+            </circle>
+
+            <!-- Head -->
+            <rect x="32" y="50" width="156" height="138" rx="32" fill="url(#rg-head)" stroke="rgba(255,255,255,0.14)"/>
+            <rect x="38" y="56" width="144" height="40" rx="26" fill="rgba(255,255,255,0.05)"/>
+
+            <!-- Side "ears" -->
+            <rect x="22" y="100" width="12" height="34" rx="4" fill="url(#rg-body)" stroke="rgba(255,255,255,0.1)"/>
+            <rect x="186" y="100" width="12" height="34" rx="4" fill="url(#rg-body)" stroke="rgba(255,255,255,0.1)"/>
+
+            <!-- Visor -->
+            <rect x="48" y="78" width="124" height="66" rx="20" fill="#05030a" stroke="rgba(255,255,255,0.10)"/>
+            <rect x="54" y="82" width="112" height="14" rx="7" fill="rgba(255,255,255,0.04)"/>
+
+            <!-- Eyes -->
+            <g class="r-eye left" data-eye="left">
+              <circle cx="85" cy="112" r="10" fill="url(#rg-eye)"/>
+              <circle cx="82" cy="108" r="3" fill="#fff" opacity="0.9"/>
+            </g>
+            <g class="r-eye right" data-eye="right">
+              <circle cx="135" cy="112" r="10" fill="url(#rg-eye)"/>
+              <circle cx="132" cy="108" r="3" fill="#fff" opacity="0.9"/>
+            </g>
+
+            <!-- Speaker grille -->
+            <g stroke="rgba(255,255,255,0.3)" stroke-width="1.8" stroke-linecap="round">
+              <line x1="92"  y1="162" x2="102" y2="162"/>
+              <line x1="106" y1="162" x2="114" y2="162"/>
+              <line x1="118" y1="162" x2="128" y2="162"/>
+            </g>
+
+            <!-- Neck -->
+            <rect x="96" y="188" width="28" height="14" fill="url(#rg-body)" stroke="rgba(255,255,255,0.08)"/>
+
+            <!-- Body -->
+            <rect x="52" y="202" width="116" height="82" rx="22" fill="url(#rg-body)" stroke="rgba(255,255,255,0.12)"/>
+            <rect x="58" y="208" width="104" height="20" rx="14" fill="rgba(255,255,255,0.04)"/>
+
+            <!-- Chest LED -->
+            <circle cx="110" cy="244" r="7" fill="url(#rg-accent)">
+              <animate attributeName="opacity" values="1;0.45;1" dur="2.6s" repeatCount="indefinite"/>
+            </circle>
+            <rect x="78" y="262" width="64" height="3" rx="1.5" fill="rgba(255,255,255,0.15)"/>
+
+          </svg>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="robot-caption">Illustratief — per traject meten we vooraf en achteraf</p>
+  </div>
+</section>
+
+<!-- ============= MARGE-BLOK (dark) ============= -->
+<section class="surface-dark marge" aria-label="De naam Margezicht">
+  <div class="container">
+    <div class="marge-inner reveal">
+      <p class="marge-quote">
+        <span class="grad-text">Plezier</span> komt eerst.
+        Plezier wordt <span class="grad-text">efficiency</span>.
+        Efficiency wordt <span class="grad-text">marge</span>.
+        Dat is waar Margezicht z'n naam aan dankt: meer overhouden in minder tijd, met zicht erop wat er gebeurt.
+      </p>
+      <div class="marge-author">
+        <span class="marge-avatar" aria-hidden="true"></span>
+        Jesse — oprichter Margezicht
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= DIAGNOSE (light) ============= -->
+<section class="surface-light section diagnose" aria-label="Diagnose-preview">
+  <div class="container">
+    <header class="section-head reveal" style="text-align:center; margin: 0 auto 48px;">
+      <span class="eyebrow">Diagnose-preview</span>
+      <h2>In welke fase zit jouw bedrijf?</h2>
+      <p style="margin: 0 auto;">Vier vragen, dertig seconden, persoonlijk advies.</p>
+    </header>
+
+    <div class="diagnose-card reveal" id="diagnose">
+      <div class="diagnose-progress" aria-hidden="true">
+        <span class="dot-step active" data-step="0"></span>
+        <span class="dot-step" data-step="1"></span>
+        <span class="dot-step" data-step="2"></span>
+        <span class="dot-step" data-step="3"></span>
+      </div>
+
+      <div class="q-stage" id="qStage">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= VOOR JOUW FUNCTIE (light) ============= -->
+<section class="surface-light section" id="functie" aria-label="Voor jouw functie">
+  <div class="container">
+    <header class="section-head reveal">
+      <span class="eyebrow">Voor jouw functie</span>
+      <h2>Quick wins per functie.</h2>
+      <p>We leveren in 30 dagen meetbare resultaten op de afdeling waar de meeste pijn zit. Kies je startpunt.</p>
+    </header>
+
+    <div class="functions">
+      <a href="#" class="fn-tile reveal" data-fn="marketing">
+        <span class="fn-arrow" aria-hidden="true">→</span>
+        <h3>Marketing</h3>
+        <ul class="fn-list">
+          <li>Contentkalender in een uur per week</li>
+          <li>SEO-briefings die schrijvers blij maken</li>
+          <li>Campagnerapportage zonder Excel-pijn</li>
+        </ul>
+      </a>
+
+      <a href="#" class="fn-tile reveal" data-fn="sales">
+        <span class="fn-arrow" aria-hidden="true">→</span>
+        <h3>Sales</h3>
+        <ul class="fn-list">
+          <li>Voorstel-drafts op basis van een gesprek</li>
+          <li>Lead-research in plaats van Googlewerk</li>
+          <li>Follow-ups die niet meer blijven liggen</li>
+        </ul>
+      </a>
+
+      <a href="#" class="fn-tile reveal" data-fn="hr">
+        <span class="fn-arrow" aria-hidden="true">→</span>
+        <h3>HR</h3>
+        <ul class="fn-list">
+          <li>Vacatureteksten die wél binnenkomen</li>
+          <li>Voorselectie zonder cv-stapels</li>
+          <li>Onboarding-pakketten per rol</li>
+        </ul>
+      </a>
+
+      <a href="#" class="fn-tile reveal" data-fn="operations">
+        <span class="fn-arrow" aria-hidden="true">→</span>
+        <h3>Operations</h3>
+        <ul class="fn-list">
+          <li>Werkinstructies uit losse stukken</li>
+          <li>Planning-assistent die rooster kent</li>
+          <li>Inkoopdata samenvoegen en duiden</li>
+        </ul>
+      </a>
+
+      <a href="#" class="fn-tile reveal" data-fn="management">
+        <span class="fn-arrow" aria-hidden="true">→</span>
+        <h3>Management</h3>
+        <ul class="fn-list">
+          <li>Maandrapportage in 20 minuten</li>
+          <li>Notulen die echt bruikbaar zijn</li>
+          <li>Eerste-keer-goed memo's en brieven</li>
+        </ul>
+      </a>
+
+      <a href="#" class="fn-tile reveal" data-fn="service">
+        <span class="fn-arrow" aria-hidden="true">→</span>
+        <h3>Klantenservice</h3>
+        <ul class="fn-list">
+          <li>Antwoord-drafts uit je kennisbank</li>
+          <li>Sentiment-radar op klachten</li>
+          <li>Snelle samenvattingen van tickets</li>
+        </ul>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============= GEEN STATS YET (light) ============= -->
+<section class="surface-light section" id="over" style="padding-top: 0;" aria-label="Over Margezicht">
+  <div class="container">
+    <div class="no-stats reveal">
+      <p>
+        Margezicht is nieuw, maar bouwt op wat al jaren gemist wordt in deze regio:
+        iemand die het bij elkaar houdt zonder de boel duurder of ingewikkelder te maken.
+        We meten elk founding-partner-traject vooraf en achteraf. Cijfers volgen, zwart-op-wit.
+      </p>
+      <p>
+        En je data? Die behandelen we zorgvuldig. We werken met zakelijke AI-tools onder
+        commerciële voorwaarden, AVG-conform. <a href="#">Lees hoe →</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============= SLOT CTA (dark) ============= -->
+<section class="surface-dark final-cta" id="plan" aria-label="Plan een gesprek">
+  <div class="container">
+    <h2 class="reveal">Klaar om dit voor jouw bedrijf<br><span class="grad-text">concreet</span> te maken?</h2>
+    <p class="reveal">
+      Twee uur, jij en wij aan tafel. We brengen jouw situatie in beeld en zetten de eerste stap concreet op papier.
+    </p>
+    <p class="reveal">
+      <a href="mailto:jesse@margezicht.nl" class="btn btn-primary">Plan een gesprek <span class="arrow">→</span></a>
+    </p>
+  </div>
+</section>
+
+<!-- ============= FOOTER ============= -->
+<footer class="surface-dark footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#top" class="logo">
+          <span class="logo-mark" aria-hidden="true"></span>
+          Margezicht
+        </a>
+        <p>AI bij elkaar houden voor het MKB. Plezier voor de DGA én het team, marge als uitkomst.</p>
+      </div>
+
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="#aanpak">Aanpak</a></li>
+          <li><a href="#werkwijze">Hoe wij werken</a></li>
+          <li><a href="#functie">Voor jouw functie</a></li>
+          <li><a href="#over">Over</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:jesse@margezicht.nl">jesse@margezicht.nl</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">KvK · in aanvraag</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Margezicht — alle rechten voorbehouden.</span>
+      <span>Gebouwd in Nederland · AVG-conform</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   Margezicht — vanilla JS
+   - Mobile nav toggle
+   - Scroll-in fades (IntersectionObserver)
+   - Diagnose flow (4 vragen → fase 1..5)
+   ========================================================= */
+
+(function () {
+  'use strict';
+
+  /* ---------- Year ---------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------- Mobile nav ---------- */
+  const nav = document.getElementById('nav');
+  const burger = document.getElementById('hamburger');
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('is-open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+  nav.querySelectorAll('.mobile-panel a').forEach(a => {
+    a.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ---------- Scroll-in reveal ---------- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- Diagnose flow ---------- */
+  const QUESTIONS = [
+    'Heb je een vast wekelijks moment om met AI te experimenteren?',
+    'Weet iedereen in je team welke tool ze mogen gebruiken en wat ze er wel of niet in mogen zetten?',
+    'Heeft je hele team training gehad en gebruikt iedereen AI minimaal wekelijks?',
+    'Heb je drie of meer eigen AI-assistenten draaien met meetbare tijdsbesparing?'
+  ];
+
+  const FASES = {
+    1: {
+      label: 'Fase 1 — verkenning',
+      title: 'AI staat nog op de wachtlijst.',
+      body:  'Er gebeurt nog niets gestructureerds. Je weet dat er iets moet, maar er is geen ritme, geen team-gewoonte en geen eigenaar. Daar valt op korte termijn de meeste tijd te winnen.',
+      rec:   { name: 'AI-Grip Sessie · 2 uur', desc: 'In één middag een gedeeld beeld én een startplek.' }
+    },
+    2: {
+      label: 'Fase 2 — eerste stappen',
+      title: 'Je experimenteert, maar zonder kader.',
+      body:  'Een paar mensen proberen iets uit. Goed nieuws — er is energie. Maar er zijn nog geen afspraken over welke tools, met welke data, voor wie. Dat moet eerst, anders versplintert het verder.',
+      rec:   { name: 'Quick win · 30 dagen', desc: 'Eén afdeling, één doel, meetbaar resultaat.' }
+    },
+    3: {
+      label: 'Fase 3 — afspraken',
+      title: 'Het kader staat. De adoptie nog niet.',
+      body:  'Je hebt richtlijnen en tooling op orde, maar slechts een deel van je team werkt er actief mee. De rest haakt af of weet niet hoe. Hier ligt de tweedeling op de loer.',
+      rec:   { name: 'Adoptie-traject · team-brede sprint', desc: 'Iedereen mee, geen helden-en-rest meer.' }
+    },
+    4: {
+      label: 'Fase 4 — team werkt mee',
+      title: 'Iedereen doet mee. Nu de hefboom.',
+      body:  'Het team gebruikt AI wekelijks, maar nog vooral als losse assistent. De winst van eigen, gerichte assistenten met meetbare tijdsbesparing pak je nog niet. Tijd om door te bouwen.',
+      rec:   { name: 'Bouw-traject · eigen assistenten', desc: 'Drie assistenten op de plekken die het meeste opleveren.' }
+    },
+    5: {
+      label: 'Fase 5 — marge in zicht',
+      title: 'Je hebt het bij elkaar. Mooi.',
+      body:  'Vast ritme, duidelijk kader, team mee, eigen assistenten met cijfers eronder. Hier wordt plezier marge. Wat ons rest: onderhouden, doorontwikkelen, en zorgen dat het niet stilvalt.',
+      rec:   { name: 'Partner-abonnement', desc: 'Maandelijkse sparring, doorontwikkeling en monitoring.' }
+    }
+  };
+
+  const stage = document.getElementById('qStage');
+  const dots = document.querySelectorAll('.diagnose-progress .dot-step');
+
+  let firstNo = null;
+  let step = 0;
+
+  function renderQuestions() {
+    stage.innerHTML = QUESTIONS.map((q, i) => `
+      <div class="question${i === 0 ? ' active' : ''}" data-q="${i}" role="group" aria-labelledby="q${i}-h">
+        <span class="qnum">Vraag ${i + 1} van 4</span>
+        <h3 id="q${i}-h">${q}</h3>
+        <div class="q-actions">
+          <button type="button" class="yes" data-answer="yes">Ja</button>
+          <button type="button" data-answer="no">Nee</button>
+        </div>
+      </div>
+    `).join('') + `
+      <div class="result" id="result" role="status" aria-live="polite">
+        <span class="result-fase" id="resultFase"></span>
+        <h3 id="resultTitle"></h3>
+        <p id="resultBody"></p>
+        <div class="result-rec">
+          <span style="font-size:22px" aria-hidden="true">✦</span>
+          <span><strong id="resultRecName"></strong><br><span style="color:var(--ink-2); font-size:14px" id="resultRecDesc"></span></span>
+        </div>
+        <div class="result-actions">
+          <a href="#plan" class="btn btn-primary">Plan een gesprek <span class="arrow">→</span></a>
+          <button class="result-reset" type="button" id="resetDiag">Opnieuw beginnen</button>
+        </div>
+      </div>
+    `;
+
+    stage.querySelectorAll('button[data-answer]').forEach(btn => {
+      btn.addEventListener('click', () => answer(btn.dataset.answer));
+    });
+    document.getElementById('resetDiag').addEventListener('click', reset);
+  }
+
+  function answer(value) {
+    if (value === 'no' && firstNo === null) firstNo = step + 1;
+    step += 1;
+    if (step >= QUESTIONS.length) {
+      showResult();
+    } else {
+      transitionTo(step);
+    }
+  }
+
+  function transitionTo(i) {
+    stage.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+    const next = stage.querySelector(`[data-q="${i}"]`);
+    if (next) next.classList.add('active');
+    dots.forEach((d, idx) => {
+      d.classList.toggle('active', idx === i);
+      d.classList.toggle('done', idx < i);
+    });
+  }
+
+  function showResult() {
+    const faseNum = firstNo === null ? 5 : firstNo;
+    const f = FASES[faseNum];
+    document.getElementById('resultFase').textContent = f.label;
+    document.getElementById('resultTitle').textContent = f.title;
+    document.getElementById('resultBody').textContent = f.body;
+    document.getElementById('resultRecName').textContent = f.rec.name;
+    document.getElementById('resultRecDesc').textContent = f.rec.desc;
+
+    stage.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+    document.getElementById('result').classList.add('active');
+    dots.forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
+  }
+
+  function reset() {
+    firstNo = null;
+    step = 0;
+    document.getElementById('result').classList.remove('active');
+    transitionTo(0);
+  }
+
+  renderQuestions();
+
+  /* ---------- AI robot scene ---------- */
+  (function initRobot() {
+    var stage = document.getElementById('robotStage');
+    if (!stage) return;
+    var robot = document.getElementById('robot');
+    var eyes = stage.querySelectorAll('.r-eye');
+    var cards = stage.querySelectorAll('.m-card');
+
+    var bio = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          cards.forEach(function(c, i) {
+            setTimeout(function() { c.classList.add('is-counted'); }, 250 + i * 180);
+          });
+          bio.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+    bio.observe(stage);
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    var targetX = 0, targetY = 0, curX = 0, curY = 0;
+    var MAX = 3.5;
+
+    function onMove(e) {
+      var r = robot.getBoundingClientRect();
+      var cx = r.left + r.width / 2;
+      var cy = r.top + r.height * 0.38;
+      var dx = (e.clientX - cx) / Math.max(window.innerWidth * 0.5, 1);
+      var dy = (e.clientY - cy) / Math.max(window.innerHeight * 0.5, 1);
+      targetX = Math.max(-1, Math.min(1, dx)) * MAX;
+      targetY = Math.max(-1, Math.min(1, dy)) * MAX;
+    }
+    window.addEventListener('mousemove', onMove, { passive: true });
+
+    function tick() {
+      curX += (targetX - curX) * 0.08;
+      curY += (targetY - curY) * 0.08;
+      eyes.forEach(function(g) {
+        g.setAttribute('transform', 'translate(' + curX.toFixed(2) + ' ' + curY.toFixed(2) + ')');
+      });
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+
+})();
+</script>
+
+</body>
+</html>
